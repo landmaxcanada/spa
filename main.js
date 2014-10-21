@@ -13,19 +13,18 @@ server.route([{
     }
 },{
     method: 'GET',
-    path: '/{filename}',
+    path: '/js/{filename*}',
     handler: {
-        file: function (request) {
-            console.log('request.params.filename: ' + '/public/' + request.params.filename);
-            return request.params.filename;
+        directory: {
+            path: '/public/js'
         }
     }
 },{
     method: 'GET',
-    path: '/js/{filename*}',
+    path: '/bower_components/{filename*}',
     handler: {
         directory: {
-            path: 'public/js'
+            path: '/bower_components/js'
         }
     }
 },{
@@ -33,7 +32,7 @@ server.route([{
     path: '/css/{filename*}',
     handler: {
         directory: {
-            path: 'public/css'
+            path: '/public/css'
         }
     }
 },{
@@ -41,7 +40,7 @@ server.route([{
     path: '/img/{filename*}',
     handler: {
         directory: {
-            path: 'public/img'
+            path: '/public/img'
         }
     }
 }]);
