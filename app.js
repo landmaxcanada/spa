@@ -13,10 +13,10 @@ server.route([{
     }
 },{
     method: 'GET',
-    path: '/js/{filename*}',
+    path: '/{param*}',
     handler: {
         directory: {
-            path: '/public/js'
+            path: '/public/'
         }
     }
 },{
@@ -24,7 +24,17 @@ server.route([{
     path: '/bower_components/{filename*}',
     handler: {
         directory: {
-            path: '/bower_components/js'
+            path: '/bower_components/'
+        }
+    }
+}
+
+    /*{
+    method: 'GET',
+    path: '/js/{filename*}',
+    handler: {
+        directory: {
+            path: '/public/js/'
         }
     }
 },{
@@ -32,7 +42,7 @@ server.route([{
     path: '/css/{filename*}',
     handler: {
         directory: {
-            path: '/public/css'
+            path: '/public/css/'
         }
     }
 },{
@@ -40,10 +50,11 @@ server.route([{
     path: '/img/{filename*}',
     handler: {
         directory: {
-            path: '/public/img'
+            path: '/public/img/'
         }
     }
-}]);
+}*/
+]);
 
 server.start(function () {
     //console.log('Server running at:', server.info.uri);
