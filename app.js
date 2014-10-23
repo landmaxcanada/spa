@@ -27,34 +27,7 @@ server.route([{
             path: '/bower_components/'
         }
     }
-}
-
-    /*{
-    method: 'GET',
-    path: '/js/{filename*}',
-    handler: {
-        directory: {
-            path: '/public/js/'
-        }
-    }
-},{
-    method: 'GET',
-    path: '/css/{filename*}',
-    handler: {
-        directory: {
-            path: '/public/css/'
-        }
-    }
-},{
-    method: 'GET',
-    path: '/img/{filename*}',
-    handler: {
-        directory: {
-            path: '/public/img/'
-        }
-    }
-}*/
-]);
+}]);
 
 server.start(function () {
     //console.log('Server running at:', server.info.uri);

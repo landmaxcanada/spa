@@ -1,0 +1,3 @@
+tsd init
+tsd query hapi -sa install
+tsd query node -sa install
