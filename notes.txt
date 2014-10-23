@@ -1,0 +1,5 @@
+TSD TypeScript Definition manager for DefinitelyTyped
+
+http://definitelytyped.org/tsd/
+
+npm install tsd -g

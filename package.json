@@ -2,10 +2,10 @@
   "name": "Wasa-Lakeside-BB",
   "version": "0.0.1",
   "description": "New Polymer site for Wasa",
-  "main": "main.js",
+  "main": "app.js",
   "author": "Dev",
   "scripts": {
-    "start": "node main.js"
+    "start": "node app.js"
   },
   "keywords": [
     "Hapi"
@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "hapi": "^7.1.0",
-	"azure": "^0.10.0",
+	  "azure": "^0.10.0",
     "bower": "^1.3.12",
     "tsd": "^0.5.7"
   }
