@@ -1,16 +1,16 @@
 (function() {
 "use strict";
-
-var DEFAULT_ROUTE = 'one';
+var DEFAULT_ROUTE = 'home';
 
 var template = document.querySelector('#t');
 
 template.pages = [
-  {name: 'Single', hash: 'one'},
-  {name: 'page', hash: 'two'},
-  {name: 'app', hash: 'three'},
-  {name: 'using', hash: 'four'},
-  {name: 'Polymer', hash: 'five'},
+  {name: 'Home', hash: 'home'},
+  {name: 'Rates', hash: 'rates'},
+  {name: 'Rooms', hash: 'rooms'},
+  {name: 'Media', hash: 'media'},
+  {name: 'Terri Clark', hash: 'terri_clark'},
+  {name: 'Contact', hash: 'contact'},
 ];
 
 template.addEventListener('template-bound', function(e) {
@@ -29,6 +29,7 @@ template.addEventListener('template-bound', function(e) {
 });
 
 template.keyHandler = function(e, detail, sender) {
+  
   var pages = document.querySelector('#pages');
 
   // Select page by num key. 
@@ -53,13 +54,33 @@ template.keyHandler = function(e, detail, sender) {
   }
 };
 
-template.cyclePages = function(e, detail, sender) {
+template.trackPages = function(e, detail, sender) {
   // Click clicks should navigate and not cycle pages.
-  if (e.path[0].localName == 'a') {
+  //if target =google-map return
+  lm.track = e;
+  lm.source = e._source;
+  lm.pointerType = e.pointerType;
+  console.log("lm.pointerType: " + lm.pointerType + "  _source: " +  lm.source);
+  /*if (e.path[0].localName == 'a' || e.target == "google-map.full") {
     return;
   }
 
-  e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);
+  e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);*/
+};
+
+template.cyclePages = function(e, detail, sender) {
+  // Click clicks should navigate and not cycle pages.
+  //if target =google-map return
+  lm.tap = e;
+  lm.source = e._source;
+  lm.pointerType = e.pointerType;
+  console.log("lm.pointerType: " + lm.pointerType + "  _source: " +  lm.source);
+/*  if (e.path[0].localName == 'a' || e.target == "google-map.full") {
+    return;
+  }
+
+  e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);*/
+  e.stopPropagation();
 };
 
 template.menuItemSelected = function(e, detail, sender) {
