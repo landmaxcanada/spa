@@ -1,92 +1,117 @@
 (function() {
-"use strict";
-var DEFAULT_ROUTE = 'home';
+  "use strict";
+  var DEFAULT_ROUTE = 'home';
 
-var template = document.querySelector('#t');
+  var template = document.querySelector('#t');
 
-template.pages = [
-  {name: 'Home', hash: 'home'},
-  {name: 'Rates', hash: 'rates'},
-  {name: 'Rooms', hash: 'rooms'},
-  {name: 'Media', hash: 'media'},
-  {name: 'Terri Clark', hash: 'terri_clark'},
-  {name: 'Contact', hash: 'contact'},
-];
+  template.pages = [
+    { name: 'Home', hash: 'home' },
+    { name: 'Rates', hash: 'rates' },
+    { name: 'Rooms', hash: 'rooms' },
+    { name: 'Media', hash: 'media' },
+    { name: 'Terri Clark', hash: 'terri_clark' },
+    { name: 'Contact', hash: 'contact' },
+  ];
 
-template.addEventListener('template-bound', function(e) {
-  var keys = document.querySelector('#keys');
+  template.addEventListener('template-bound', function(e) {
+    var keys = document.querySelector('#keys');
 
-  // Allow selecting pages by num keypad. Dynamically add
-  // [1, template.pages.length] to key mappings.
-  var keysToAdd = Array.apply(null, template.pages).map(function(x, i) {
-    return i + 1;
-  }).reduce(function(x, y) {
-    return x + ' ' + y;
+    // Allow selecting pages by num keypad. Dynamically add
+    // [1, template.pages.length] to key mappings.
+    var keysToAdd = Array.apply(null, template.pages).map(function(x, i) {
+      return i + 1;
+    }).reduce(function(x, y) {
+        return x + ' ' + y;
+      });
+    keys.keys += ' ' + keysToAdd;
+
+    this.route = this.route || DEFAULT_ROUTE; // Select initial route.
   });
-  keys.keys += ' ' + keysToAdd;
 
-  this.route = this.route || DEFAULT_ROUTE; // Select initial route.
-});
+  template.keyHandler = function(e, detail, sender) {
 
-template.keyHandler = function(e, detail, sender) {
-  
-  var pages = document.querySelector('#pages');
+    var pages = document.querySelector('#pages');
 
-  // Select page by num key. 
-  var num = parseInt(detail.key);
-  if (!isNaN(num) && num <= this.pages.length) {
-    pages.selectIndex(num - 1);
-    return;
-  }
+    // Select page by num key. 
+    var num = parseInt(detail.key);
+    if (!isNaN(num) && num <= this.pages.length) {
+      pages.selectIndex(num - 1);
+      return;
+    }
 
-  switch (detail.key) {
-    case 'left':
-    case 'up':
-      pages.selectPrevious();
-      break;
-    case 'right':
-    case 'down':
-      pages.selectNext();
-      break;
-    case 'space':
-      detail.shift ? pages.selectPrevious() : pages.selectNext();
-      break;
-  }
-};
+    switch (detail.key) {
+      case 'left':
+      case 'up':
+        pages.selectPrevious();
+        break;
+      case 'right':
+      case 'down':
+        pages.selectNext();
+        break;
+      case 'space':
+        detail.shift ? pages.selectPrevious() : pages.selectNext();
+        break;
+    }
+  };
 
-template.trackPages = function(e, detail, sender) {
-  // Click clicks should navigate and not cycle pages.
-  //if target =google-map return
-  lm.track = e;
-  lm.source = e._source;
-  lm.pointerType = e.pointerType;
-  console.log("lm.pointerType: " + lm.pointerType + "  _source: " +  lm.source);
-  /*if (e.path[0].localName == 'a' || e.target == "google-map.full") {
-    return;
-  }
-
-  e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);*/
-};
-
-template.cyclePages = function(e, detail, sender) {
-  // Click clicks should navigate and not cycle pages.
-  //if target =google-map return
-  lm.tap = e;
-  lm.source = e._source;
-  lm.pointerType = e.pointerType;
-  console.log("lm.pointerType: " + lm.pointerType + "  _source: " +  lm.source);
-/*  if (e.path[0].localName == 'a' || e.target == "google-map.full") {
-    return;
-  }
-
-  e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);*/
-  e.stopPropagation();
-};
-
-template.menuItemSelected = function(e, detail, sender) {
-  if (detail.isSelected) {
+  template.hideDrawer = function(){
     document.querySelector('#scaffold').closeDrawer();
   }
-};
+  template.trackPages = function(e, detail, sender) {
+    // Click clicks should navigate and not cycle pages.
+    //if target =google-map return
+    lm.track = e;
+    lm.source = e._source;
+    lm.pointerType = e.pointerType;
+    console.log("lm.pointerType: " + lm.pointerType + "  _source: " + lm.source);
+    /*if (e.path[0].localName == 'a' || e.target == "google-map.full") {
+      return;
+    }
+
+    e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);*/
+  };
+
+  template.cyclePages = function(e, detail, sender) {
+    // Click clicks should navigate and not cycle pages.
+    //if target =google-map return
+    lm.tap = e;
+    lm.source = e._source;
+    lm.pointerType = e.pointerType;
+    console.log("lm.pointerType: " + lm.pointerType + "  _source: " + lm.source);
+    /*  if (e.path[0].localName == 'a' || e.target == "google-map.full") {
+        return;
+      }
+
+      e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);*/
+    e.stopPropagation();
+  };
+
+  template.menuItemSelected = function(e, detail, sender) {
+    if (detail.isSelected) {
+      document.querySelector('#scaffold').closeDrawer();
+    }
+    if (window.location.hash === "#home") {
+      setTimeout(function() {
+        lm.resetMap();
+      }, 1000);
+
+    }
+    lm.tweakTitleFont();
+  };
+  
+  lm.resetMap = function(){
+    lm.gMap.resize();
+    lm.gMap.map.setCenter(lm.mapCenter);
+  }
+
+  lm.tweakTitleFont = function() {
+    $("div#mainTitle").fitText(1.2, { minFontSize: '18px', maxFontSize: '30px' });
+  }
+
+setTimeout(function() {
+    lm.tweakTitleFont();
+    lm.gMap = document.querySelector('google-map');
+  }, 1000)
+
 
 })();

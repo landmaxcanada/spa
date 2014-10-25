@@ -1,10 +1,10 @@
 
-  lm.gmap = document.querySelector('google-map');
+  /*lm.gMap = document.querySelector('google-map');*/
   
-  lm.gmap.addEventListener('api-load', function(e) {
+  /*lm.gMap.addEventListener('api-load', function(e) {
     document.querySelector('google-map-directions').map = this.map;
   });
 
   function toggleControls() {
-    lm.gmap.disableDefaultUI = !lm.gmap.disableDefaultUI;
-  }
+    lm.gMap.disableDefaultUI = !lm.gMap.disableDefaultUI;
+  }*/

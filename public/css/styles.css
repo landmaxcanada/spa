@@ -13,6 +13,10 @@ body {
   left:0;
 }
 
+div#mainTitle{
+  width:95%;
+  }
+
 core-animated-pages {
   width: 100%;
   height: 100%;
@@ -29,6 +33,11 @@ core-animated-pages > * {
 body /deep/ core-toolbar {
   background-color: #03a9f4;
   color: #fff;
+}
+
+html /deep/ core-icon{
+  width: 36px !important;
+  height: 36px !important;
 }
 
 core-menu {
