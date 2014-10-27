@@ -21,13 +21,14 @@
   </head>
   
   <body unresolved fullbleed>
+    <main id="content-container" fit>
     <template is="auto-binding" id="t">
       <!-- Route controller. -->
       <flatiron-director route="{{route}}" autoHash></flatiron-director>
       <!-- Keyboard nav controller. -->
       <core-a11y-keys id="keys" target="{{parentElement}}" keys="up down left right space space+shift" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
-      <core-scaffold id="scaffold" responsiveWidth='2000px'>
-        <nav flex relative >
+      <core-scaffold id="scaffold" responsiveWidth='2000px' fit>
+        <nav layout vertical>
           <core-toolbar>
             <span>Menu</span>
             <span flex></span>
@@ -35,13 +36,15 @@
               <core-icon icon="chevron-left" on-tap="{{hideDrawer}}"></core-icon>
             </span>
           </core-toolbar>
-          <core-menu flex relative valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}" on-core-select="{{menuItemSelected}}">
+          <docs-menu menu="docs" flex relative>
+          <core-menu id="mainMenu" class="full10" valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}" on-core-select="{{menuItemSelected}}">
             <template repeat="{{page, i in pages}}">
               <paper-item icon="label{{route != page.hash ? '-outline' : ''}}" label="{{page.name}}" hash="{{page.hash}}">
                 <a href="#{{page.hash}}"></a>
               </paper-item>
             </template>
           </core-menu>
+          </docs-menu>
         </nav>
         <core-toolbar tool flex>
           <div id="mainTitle">Wasa Lakeside -
@@ -85,6 +88,7 @@
         </div>
       </core-scaffold>
     </template>
+    </main>
     <script src="js/gMap.js"></script>
     <script src="js/main.js"></script>
     <!-- <script>

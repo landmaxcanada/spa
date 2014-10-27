@@ -26,6 +26,11 @@ window.addEventListener('google-map-ready', function(e) {
     lm.gMap.resize();
     lm.gMap.map.setCenter(lm.mapCenter);
     lm.gMap.setAttribute("fitToMarkers", "true");
+    setTimeout(function(){
+      lm.gMap.removeAttribute("fitToMarkers");
+    }, 500);
+    
+    
   }
 
   });

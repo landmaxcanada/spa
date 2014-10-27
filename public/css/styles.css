@@ -1,3 +1,12 @@
+html, body{
+  margin:0;
+  padding:0;
+  height: 100%;
+}
+*{
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 body {
   font-family: "RobotoDraft";
   font-weight: 300;
@@ -11,6 +20,17 @@ body {
   right:0;
   bottom:0;
   left:0;
+}
+
+.full10{
+  position: absolute;
+  top:10px;
+  right:10px;
+  bottom:10px;
+  left:10px;
+}
+nav{
+  height: 100%;
 }
 
 div#mainTitle{
@@ -30,6 +50,10 @@ core-animated-pages > * {
   background-color: white;
 }
 
+core-animated-pages section div{
+  padding: 10px;
+}
+
 body /deep/ core-toolbar {
   background-color: #03a9f4;
   color: #fff;
@@ -44,7 +68,7 @@ html /deep/ core-icon{
 core-menu {
   color: #01579b;
   margin: 10px 0 0 0;
-  overflow-y:scroll;
+  /*overflow-y:scroll;*/
 }
 
 core-menu > paper-item {
@@ -62,4 +86,15 @@ core-menu > paper-item.core-selected {
     height: 100%;
   }
 }
+
+docs-menu{
+  padding: 10px;
+}
+
+#mainMenu {
+display: block;
+overflow: auto;
+-webkit-overflow-scrolling: touch;
+padding: 0;
+margin: 0;
 google-map{}
