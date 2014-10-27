@@ -38,6 +38,7 @@ body /deep/ core-toolbar {
 html /deep/ core-icon{
   width: 36px !important;
   height: 36px !important;
+  cursor: pointer;
 }
 
 core-menu {
@@ -48,6 +49,7 @@ core-menu {
 
 core-menu > paper-item {
   transition: all 300ms ease-in-out;
+  width: 80%;
 }
 
 core-menu > paper-item.core-selected {

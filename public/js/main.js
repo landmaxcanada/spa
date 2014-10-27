@@ -1,11 +1,13 @@
-(function() {
+///<reference path='../../typings/jquery/jquery.d.ts'/>
+  
+  (function() {
   "use strict";
-  var DEFAULT_ROUTE = 'home';
+  var DEFAULT_ROUTE = 'map';
 
   var template = document.querySelector('#t');
 
   template.pages = [
-    { name: 'Home', hash: 'home' },
+    { name: 'Map', hash: 'map' },
     { name: 'Rates', hash: 'rates' },
     { name: 'Rooms', hash: 'rooms' },
     { name: 'Media', hash: 'media' },
@@ -55,6 +57,7 @@
   };
 
   template.hideDrawer = function(){
+    console.log("hideDrawer");
     document.querySelector('#scaffold').closeDrawer();
   }
   template.trackPages = function(e, detail, sender) {
@@ -90,7 +93,7 @@
     if (detail.isSelected) {
       document.querySelector('#scaffold').closeDrawer();
     }
-    if (window.location.hash === "#home") {
+    if (window.location.hash === "#map") {
       setTimeout(function() {
         lm.resetMap();
       }, 1000);
@@ -98,20 +101,12 @@
     }
     lm.tweakTitleFont();
   };
-  
-  lm.resetMap = function(){
-    lm.gMap.resize();
-    lm.gMap.map.setCenter(lm.mapCenter);
-  }
 
   lm.tweakTitleFont = function() {
     $("div#mainTitle").fitText(1.2, { minFontSize: '18px', maxFontSize: '30px' });
   }
 
 setTimeout(function() {
-    lm.tweakTitleFont();
-    lm.gMap = document.querySelector('google-map');
-  }, 1000)
-
-
+    lm.tweakTitleFont();  
+  }, 10000)
 })();
