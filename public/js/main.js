@@ -88,16 +88,23 @@
       e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);*/
     e.stopPropagation();
   };
-
-  template.menuItemSelected = function(e, detail, sender) {
-    if (detail.isSelected) {
-      document.querySelector('#scaffold').closeDrawer();
-    }
+  
+  template.menuTapped = function(e, detail, sender) {
+    lm.menuTapped = detail;
+    console.log('menu Tapped detail: ' + detail);
     if (window.location.hash === "#map") {
       setTimeout(function() {
         lm.resetMap();
-      }, 1000);
+        document.querySelector('#scaffold').closeDrawer();
+      }, 500);
+    }
+  }
 
+  template.menuItemSelected = function(e, detail, sender) {
+    lm.menuDetail = detail;
+    console.log('menu detail: ' + detail)
+    if (detail.isSelected) {
+      document.querySelector('#scaffold').closeDrawer();
     }
     lm.tweakTitleFont();
   };
@@ -109,4 +116,12 @@
 setTimeout(function() {
     lm.tweakTitleFont();  
   }, 10000)
+
+
+template.bbMarkerTap = function(){
+  lm.tempThis = this;
+  console.log("bbTaped: " + lm.tempThis);
+}
+
+
 })();

@@ -12,6 +12,7 @@
     <!--<link rel="import" href="vulcanized.html">-->
     <link rel="import" href="elements.html">
     <link rel="import" href="../bower_components/google-map/google-map.html">
+    <link rel="import" href="../bower_components/google-streetview-pano/google-streetview-pano.html">
     <link rel="stylesheet" href="css/styles.css" shim-shadowdom>
     <script>
       /*var lm = window.lm || {};*/
@@ -37,7 +38,8 @@
             </span>
           </core-toolbar>
           <docs-menu menu="docs" flex relative>
-          <core-menu id="mainMenu" class="full10" valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}" on-core-select="{{menuItemSelected}}">
+          <core-menu id="mainMenu" class="full10" valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
+          on-core-select="{{menuItemSelected}}" on-core-activate="{{menuTapped}}">
             <template repeat="{{page, i in pages}}">
               <paper-item icon="label{{route != page.hash ? '-outline' : ''}}" label="{{page.name}}" hash="{{page.hash}}">
                 <a href="#{{page.hash}}"></a>
@@ -64,10 +66,26 @@
               <!--<div>Home2</div>-->
               <!--<google-map class="full" latitude="49.7865071" longitude="-115.742903" zoom="10" fit map="{{map}}">      on-track="{{trackPages}}"   -->
               <google-map class="full" fitToMarkers fit map="{{map}}">
-                <google-map-marker latitude="49.7865071" longitude="-115.742903" title="Wasa Lakeside B&B and Cabin" icon="http://maps.google.com/mapfiles/kml/shapes/lodging.png"></google-map-marker>
+                <google-map-marker
+                  id="bbMarker"
+                  latitude="49.7865071"
+                  longitude="-115.742903"
+                  title="Wasa Lakeside B&B and Cabin"
+                  icon="http://maps.google.com/mapfiles/kml/shapes/lodging.png">  
+                  </google-map-marker>
                 <google-map-marker class="tempMarker" latitude="51" longitude="-114" icon="img/transparent.gif"></google-map-marker>
                 <google-map-marker class="tempMarker" latitude="49" longitude="-116.5" icon="img/transparent.gif"></google-map-marker>
+                <google-map-marker id="sv-dock" latitude="49.786651" longitude="-115.741623" icon="img/street_view.png"></google-map-marker>
               </google-map>
+              <google-streetview-pano id="svElm" fit panoid="WcCu7GfS-RUAAAQJOB-ULA"
+              heading="197" pitch="82" zoom="1.0" disableDefaultUI ></google-streetview-pano>
+              <!--<google-streetview-pano id="svElm" class="hide" fit panoid="{{panoId}}"
+              heading="{{heading}}" pitch="{{pitch}}" zoom="{{zoom}}" disableDefaultUI ></google-streetview-pano>
+              <google-streetview-pano id="svElm" class="hide" panoid="5922385358283137570" fit disableDefaultUI ></google-streetview-pano>-->
+              
+              <!--<google-streetview-pano id="svElm" class="show" panoid="!3m5!1e1!3m3!1sWcCu7GfS-RUAAAQJOB-ULA!2e0!3e11"
+              fit="" disabledefaultui="" heading="197" pitch="82" zoom="1.0"></google-streetview-pano>-->
+              
             </section>
             <section hash="rates">
               <div>Rates</div>

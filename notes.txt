@@ -5,3 +5,4 @@ http://definitelytyped.org/tsd/
 npm install tsd -g
 
 tsd query jquery -sa install
+tsd query google -sa install

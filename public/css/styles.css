@@ -29,6 +29,8 @@ body {
   bottom:10px;
   left:10px;
 }
+.hide{display:none}
+.show{display:block}
 nav{
   height: 100%;
 }
@@ -78,6 +80,7 @@ core-menu > paper-item {
 
 core-menu > paper-item.core-selected {
   background: #e1f5fe;
+  color: #03a9f4;
 }
 
 @media all and (max-width: 480px) {
@@ -97,4 +100,5 @@ overflow: auto;
 -webkit-overflow-scrolling: touch;
 padding: 0;
 margin: 0;
-google-map{}
+right: 20px;
+}
