@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<title>Wasa Lakeside B&amp;B or Cabin</title>
+		<style>
+			html, body{
+			  margin:0;
+			  padding:0;
+			  height: 100%;
+			  font-family: verdana, sans-serif
+			}
+			h3, p{
+				margin:0;
+			  	padding:0;
+			}
+			.full{
+			  position: absolute;
+			  top:0;
+			  right:0;
+			  bottom:0;
+			  left:0;
+			}
+			.hide{display:none}
+			.hidden{visibility: hidden}
+			.show{display:block}
+			div#loader{
+				overflow-x:scroll;
+				overflow-y:hidden;
+				text-align: center;
+				z-index: 10;
+			}
+			div#loader img{
+				height: 101%;
+			}
+			div#loaderControls{
+				position: absolute;
+				width: 27%;
+				min-width: 280px;
+				border: 1px solid black;
+				border-radius: 8px;
+				box-shadow: 4px 4px 10px #000;
+				bottom: 50px;
+				left: 50%;
+				margin-left: -130px;
+				padding: 20px;
+				background-color: rgba(255,255,255,0.3);
+				z-index: 20
+			}
+			div#loaderControls button{
+				margin: 6px;
+				font-size: 24px;
+				box-shadow: 0px 0px 10px #060;
+			}
+			::-webkit-scrollbar {  
+			    height:10px;
+			}						
+			::-webkit-scrollbar-track-piece {
+			    background-color:lightblue;
+			}			
+			::-webkit-scrollbar-thumb {  
+			    background-color: blue;
+			}
+			paper-button{overflow: visible;}
+			
+			html /deep/ core-icon{
+				height: 32px;
+    			width: 32px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="loader" class="full" touch-action="pan-x">
+			<img id="loaderImg" src="http://www.wasalakeresort.com/images/2003_South_PanoramMerged1600x250.jpg"/>
+		</div>
+		<div id="loaderControls" onClick="lm.scroll.Stop()">
+			<h3>Wasa Lakeside B&amp;B</h3>
+			<p>
+				<small id="loaderMessage">Loading...</small>
+			</p>
+			<p>
+				<button id="enterBtn" class="hidden">Enter</button>
+				<paper-button raised roll="button">
+				  <core-icon icon="av-icons:fast-rewind">
+				</paper-button>
+				<paper-button raised roll="button">
+				  <core-icon icon="av-icons:pause-circle-outline">
+				</paper-button>
+				<paper-button raised roll="button">
+				  <core-icon icon="av-icons:fast-forward">
+				</paper-button>
+			
+			<!--<span id="scrollLeft">Scroll</span>&nbsp;
+			<span id="debugLoad">Debug</span>-->
+			</p>
+		</div>
+		<script>
+			var lm = {};
+			lm.scroll = {};
+			
+			lm.lcElm = document.getElementById('loaderControls');
+			lm.lcElmMarginLeft = lm.lcElm.offsetWidth/2;
+			lm.lcElm.style.marginLeft = "-" + lm.lcElmMarginLeft + "px";
+			
+			lm.scroll.Init = function(){
+				
+				lm.scroll.elm = document.getElementById('loader');				
+				lm.scroll.elmWidth = lm.scroll.elm.offsetWidth;
+				lm.scroll.img = document.getElementById('loaderImg');
+				lm.scroll.imgWidth = lm.scroll.img.width;
+				
+				
+				lm.scroll.width = lm.scroll.imgWidth - lm.scroll.elmWidth;
+				lm.scroll.start = lm.scroll.width * 0.5;
+
+				lm.scroll.elm.scrollLeft = Math.round(lm.scroll.start);
+
+				lm.scroll.currentX = lm.scroll.elm.scrollLeft;
+				
+				lm.scroll.forward = true;
+				
+				lm.scroll.X = function(){
+
+					if(lm.scroll.forward){
+						lm.scroll.currentX ++;
+						lm.scroll.elm.scrollLeft = lm.scroll.currentX;
+						
+						if(lm.scroll.currentX >= lm.scroll.width){
+							lm.scroll.forward = false;
+						}				
+					} else if(!lm.scroll.forward){
+						lm.scroll.currentX --;
+						lm.scroll.elm.scrollLeft = lm.scroll.currentX;
+						
+						if(lm.scroll.currentX === 1){
+								lm.scroll.forward = true;
+							}
+					}
+					
+					//document.getElementById("scrollLeft").innerHTML = lm.scroll.currentX;
+					
+					lm.scroll.raf = requestAnimationFrame(lm.scroll.X );
+				}
+				
+				lm.scroll.Stop = function(){					
+					cancelAnimationFrame(lm.scroll.raf);
+					lm.scroll.elm.removeEventListener;					
+				}
+			}
+			
+			document.addEventListener('polymer-ready', function() {
+			    //document.querySelector('#pano').stop();
+				
+				if(lm.IsMobile()){
+					console.log("Window Ready for Mobile");
+					
+				}else{
+					//lm.scroll.elm.setAttribute("type","button");("onmousedown",lm.scroll.Stop, false );
+					console.log("Window Ready for Desktop");
+				}
+				//lm.scroll.elm.setAttribute("touch-action","lm.scroll.Stop()");
+				//lm.scroll.elm.setAttribute("on-tap","lm.scroll.Stop");
+				//lm.scroll.img.setAttribute("on-tap","lm.scroll.Stop");
+				document.getElementById("enterBtn").className = '';
+				
+				setTimeout(function(){
+					Polymer.import(['../bower_components/paper-button/paper-button.html', '../bower_components/core-icons/av-icons.html'], function() {
+		          //document.querySelector('dynamic-element').description = 'a dynamic import';
+		        	});
+				}, 500);
+				
+				
+		  	});
+			  
+			lm.IsMobile = function() {
+			    if (navigator.userAgent.match(/Android/i)
+			            || navigator.userAgent.match(/iPhone/i)
+			            || navigator.userAgent.match(/iPad/i)
+			            || navigator.userAgent.match(/iPod/i)
+			            || navigator.userAgent.match(/BlackBerry/i)
+			            || navigator.userAgent.match(/Windows Phone/i)
+			            || navigator.userAgent.match(/Opera Mini/i)
+			            || navigator.userAgent.match(/IEMobile/i)
+			            ) {
+			        return true;
+			    }
+			}
+			
+			window.onload = function(){
+				
+				lm.scroll.elm = document.getElementById('loader');
+				
+				
+
+				setTimeout(function(){
+					lm.scroll.Init();
+					lm.scroll.raf = requestAnimationFrame(lm.scroll.X );
+				
+					if(window.HTMLTemplateElement && window.navigator.userAgent.indexOf("Chrome") !== -1){					
+						var link1 = document.createElement('link');
+						link1.rel = "import";
+						link1.href = '../bower_components/polymer/polymer.html';
+						document.getElementsByTagName("head")[0].appendChild(link1);
+						
+						document.getElementById("loaderMessage").innerHTML = "Awesome! You are using Google Chrome.";
+					}else{
+						
+						var script1 = document.createElement('script');
+						script1.type = "text/javascript";
+						script1.src = '//cdnjs.cloudflare.com/ajax/libs/platform/1.2.0/platform.js';
+						script1.onload = function(){
+							console.log("Script 1 Ready");
+							setTimeout(function(){
+					            var link2 = document.createElement('link');
+								link2.rel = "import";
+								link2.href = '../bower_components/polymer/polymer.html';
+								document.getElementsByTagName("head")[0].appendChild(link2);
+							}, 1000);
+				        };
+						document.getElementsByTagName("head")[0].appendChild(script1);
+						
+						/*!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[
+	  "//cdnjs.cloudflare.com/ajax/libs/platform/1.2.0/platform.js",
+	  "//cdnjs.cloudflare.com/ajax/libs/polymer/0.4.2/polymer.js",
+	  "//cdnjs.cloudflare.com/ajax/libs/polymer/0.4.2/polymer.js.map"
+	])*/
+					document.getElementById("loaderMessage").innerHTML = "You may consider using <a href='http://www.google.ca/chrome/' target='_blank'>Google Chrome</a> for best performance of this site!";	
+					
+					
+					
+					}
+					
+				}, 200);
+				
+				
+			}
+		</script>
+		<!--<link rel="subresource" href="//cdnjs.cloudflare.com/ajax/libs/polymer/0.4.2/polymer.js">
+		<link rel="subresource" href="//cdnjs.cloudflare.com/ajax/libs/polymer/0.4.2/polymer.js.map">-->
+		<script>
+</script>
+	</body>
+
+</html>

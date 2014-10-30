@@ -7,7 +7,7 @@
   var template = document.querySelector('#t');
 
   template.pages = [
-    { name: 'Map', hash: 'map' },
+    { name: 'Map', hash: 'map', icon: 'language' },
     { name: 'Rates', hash: 'rates' },
     { name: 'Rooms', hash: 'rooms' },
     { name: 'Media', hash: 'media' },

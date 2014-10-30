@@ -62,7 +62,7 @@
             <div>{{page.name}}</div>
           </section>
         </template>   lm.gMap.resize()  lm.gMap.markers[1].marker.setMap();-->
-            <section hash="map">
+            <section id="mapSection" hash="map">
               <!--<div>Home2</div>-->
               <!--<google-map class="full" latitude="49.7865071" longitude="-115.742903" zoom="10" fit map="{{map}}">      on-track="{{trackPages}}"   -->
               <google-map class="full" fitToMarkers fit map="{{map}}">
@@ -78,7 +78,7 @@
                 <google-map-marker id="sv-dock" latitude="49.786651" longitude="-115.741623" icon="img/street_view.png"></google-map-marker>
               </google-map>
               <google-streetview-pano id="svElm" fit panoid="WcCu7GfS-RUAAAQJOB-ULA"
-              heading="197" pitch="82" zoom="1.0" disableDefaultUI ></google-streetview-pano>
+              heading="197" pitch="-2" zoom="1.0" disableDefaultUI ></google-streetview-pano>
               <!--<google-streetview-pano id="svElm" class="hide" fit panoid="{{panoId}}"
               heading="{{heading}}" pitch="{{pitch}}" zoom="{{zoom}}" disableDefaultUI ></google-streetview-pano>
               <google-streetview-pano id="svElm" class="hide" panoid="5922385358283137570" fit disableDefaultUI ></google-streetview-pano>-->
