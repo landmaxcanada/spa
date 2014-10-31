@@ -33,27 +33,25 @@
 				z-index: 10;
 			}
 			div#loader img{
+				pointer-events: none;
 				height: 101%;
 			}
+			div#controlBtns{min-height:67px}
 			div#loaderControls{
 				position: absolute;
 				width: 27%;
-				min-width: 280px;
+				min-width: 322px;
 				border: 1px solid black;
 				border-radius: 8px;
 				box-shadow: 4px 4px 10px #000;
 				bottom: 50px;
 				left: 50%;
 				margin-left: -130px;
-				padding: 20px;
+				padding: 10px;
 				background-color: rgba(255,255,255,0.3);
 				z-index: 20
 			}
-			div#loaderControls button{
-				margin: 6px;
-				font-size: 24px;
-				box-shadow: 0px 0px 10px #060;
-			}
+			
 			::-webkit-scrollbar {  
 			    height:10px;
 			}						
@@ -63,38 +61,53 @@
 			::-webkit-scrollbar-thumb {  
 			    background-color: blue;
 			}
-			paper-button{overflow: visible;}
+			html div#loaderControls paper-button{
+				overflow: visible;
+				padding: 4px;
+				margin: 4px;
+				min-height: 44px;
+				min-width: 44px;
+				font-size: 32px;
+				background-color: rgba(255,255,255,0.2);
+			}
 			
-			html /deep/ core-icon{
+			html div#loaderControls paper-button#enterBtn{
+				padding: 10px;
+				background-color: rgba(0,255,0,0.2);
+			}
+			
+			html paper-button /deep/ core-icon{
 				height: 32px;
     			width: 32px;
+				padding: 6px;
+				marging: 6px;
 			}
 		</style>
 	</head>
 	<body>
-		<div id="loader" class="full" touch-action="pan-x">
+		<div id="loader" class="full" touch-action="none" onmousedown="lm.scroll.Stop()">
 			<img id="loaderImg" src="http://www.wasalakeresort.com/images/2003_South_PanoramMerged1600x250.jpg"/>
 		</div>
-		<div id="loaderControls" onClick="lm.scroll.Stop()">
+		<div id="loaderControls" onmousedown="lm.scroll.Stop()">
 			<h3>Wasa Lakeside B&amp;B</h3>
-			<p>
+			<div>
 				<small id="loaderMessage">Loading...</small>
-			</p>
-			<p>
-				<button id="enterBtn" class="hidden">Enter</button>
+			</div>
+			<div id="controlBtns" class="hidden" onclick="lm.LoaderActions()">
+				<paper-button  raised roll="button" id="enterBtn">Enter</paper-button>
 				<paper-button raised roll="button">
-				  <core-icon icon="av-icons:fast-rewind">
+				  <core-icon icon="av:fast-rewind"></core-icon>
 				</paper-button>
 				<paper-button raised roll="button">
-				  <core-icon icon="av-icons:pause-circle-outline">
+				  <core-icon icon="av:pause-circle-outline"></core-icon>
 				</paper-button>
 				<paper-button raised roll="button">
-				  <core-icon icon="av-icons:fast-forward">
+				  <core-icon icon="av:fast-forward"></core-icon>
 				</paper-button>
-			
+	
 			<!--<span id="scrollLeft">Scroll</span>&nbsp;
 			<span id="debugLoad">Debug</span>-->
-			</p>
+			</div>
 		</div>
 		<script>
 			var lm = {};
@@ -150,6 +163,10 @@
 				}
 			}
 			
+			lm.LoaderActions = function(evt){
+				lm.evt = evt;
+			}
+			
 			document.addEventListener('polymer-ready', function() {
 			    //document.querySelector('#pano').stop();
 				
@@ -160,14 +177,11 @@
 					//lm.scroll.elm.setAttribute("type","button");("onmousedown",lm.scroll.Stop, false );
 					console.log("Window Ready for Desktop");
 				}
-				//lm.scroll.elm.setAttribute("touch-action","lm.scroll.Stop()");
-				//lm.scroll.elm.setAttribute("on-tap","lm.scroll.Stop");
-				//lm.scroll.img.setAttribute("on-tap","lm.scroll.Stop");
-				document.getElementById("enterBtn").className = '';
 				
 				setTimeout(function(){
-					Polymer.import(['../bower_components/paper-button/paper-button.html', '../bower_components/core-icons/av-icons.html'], function() {
-		          //document.querySelector('dynamic-element').description = 'a dynamic import';
+					Polymer.import(['../bower_components/core-icons/core-icons.html','../bower_components/paper-button/paper-button.html', '../bower_components/core-icons/av-icons.html'], 
+					function() {
+		          		document.getElementById("controlBtns").className = '';
 		        	});
 				}, 500);
 				
