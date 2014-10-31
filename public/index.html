@@ -12,7 +12,7 @@
 			  height: 100%;
 			  font-family: verdana, sans-serif
 			}
-			h3, p{
+			h2,h3, p{
 				margin:0;
 			  	padding:0;
 			}
@@ -61,6 +61,11 @@
 			::-webkit-scrollbar-thumb {  
 			    background-color: blue;
 			}
+			html div#loaderControls h2{
+				color:blue;
+				text-align: center;
+			}
+			
 			html div#loaderControls paper-button{
 				overflow: visible;
 				padding: 4px;
@@ -69,11 +74,25 @@
 				min-width: 44px;
 				font-size: 32px;
 				background-color: rgba(255,255,255,0.2);
+				vertical-align: middle;
+			}
+			html div#loaderControls paper-button svg{
+				width: 44px;
+				height: 44px;
 			}
 			
-			html div#loaderControls paper-button#enterBtn{
+			html div#loaderControls paper-button#btnEnter{
 				padding: 10px;
+			}
+			
+			html div#loaderControls paper-button.disabled{
+				background-color: rgba(255,20,147,0.2);
+				cursor: not-allowed;
+			}
+			
+			html div#loaderControls paper-button.enabled{
 				background-color: rgba(0,255,0,0.2);
+				cursor: pointer;
 			}
 			
 			html paper-button /deep/ core-icon{
@@ -85,29 +104,29 @@
 		</style>
 	</head>
 	<body>
-		<div id="loader" class="full" touch-action="none" onmousedown="lm.scroll.Stop()">
-			<img id="loaderImg" src="http://www.wasalakeresort.com/images/2003_South_PanoramMerged1600x250.jpg"/>
+		<div id="loader" class="full" touch-action="none">
+			<img id="loaderImg" src="http://www.wasalakeresort.com/images/2003_South_PanoramMerged1600x250.jpg" />
 		</div>
-		<div id="loaderControls" onmousedown="lm.scroll.Stop()">
-			<h3>Wasa Lakeside B&amp;B</h3>
+		<div id="loaderControls">
+			<h2>Wasa Lakeside B&amp;B</h2>
 			<div>
 				<small id="loaderMessage">Loading...</small>
 			</div>
-			<div id="controlBtns" class="hidden" onclick="lm.LoaderActions()">
-				<paper-button  raised roll="button" id="enterBtn">Enter</paper-button>
-				<paper-button raised roll="button">
-				  <core-icon icon="av:fast-rewind"></core-icon>
+			<div id="controlBtns" class="hidden">
+				<paper-button id="btnEnter" class="enabled" raised roll="button" onclick="lm.LoaderActionEnter()">Enter</paper-button>
+				<paper-button id="btnRW" class="disabled" raised roll="button">
+					<core-icon icon="av:fast-rewind" onclick="lm.LoaderActionRW()"></core-icon>
 				</paper-button>
-				<paper-button raised roll="button">
-				  <core-icon icon="av:pause-circle-outline"></core-icon>
+				<paper-button id="btnPause" class="enabled" raised roll="button">
+					<core-icon icon="av:pause-circle-outline" onclick="lm.LoaderActionPause()"></core-icon>
 				</paper-button>
-				<paper-button raised roll="button">
-				  <core-icon icon="av:fast-forward"></core-icon>
+				<paper-button id="btnFF" class="disabled" raised roll="button">
+					<core-icon icon="av:fast-forward" onclick="lm.LoaderActionFF()"></core-icon>
 				</paper-button>
-	
-			<!--<span id="scrollLeft">Scroll</span>&nbsp;
+				<!--<span id="scrollLeft">Scroll</span>&nbsp;
 			<span id="debugLoad">Debug</span>-->
 			</div>
+			<div id="loading">Loading...</div>
 		</div>
 		<script>
 			var lm = {};
@@ -135,7 +154,8 @@
 				lm.scroll.forward = true;
 				
 				lm.scroll.X = function(){
-
+					cancelAnimationFrame(lm.scroll.raf);
+					lm.scroll.elm.removeEventListener;
 					if(lm.scroll.forward){
 						lm.scroll.currentX ++;
 						lm.scroll.elm.scrollLeft = lm.scroll.currentX;
@@ -159,22 +179,56 @@
 				
 				lm.scroll.Stop = function(){					
 					cancelAnimationFrame(lm.scroll.raf);
-					lm.scroll.elm.removeEventListener;					
+					lm.scroll.elm.removeEventListener;
+					lm.btn.RW.className = 'enabled';
+					lm.btn.pause.className = 'disabled';
+					lm.btn.FF.className = 'enabled';
+					lm.scroll.elm.setAttribute("touch-action", "pan-x");			
 				}
 			}
+			//PolymerGestures.addEventListener(element, eventname, handler, capture);
+/*			PolymerGestures.addEventListener('lm.btn.pause', 'tap', 'lm.LoaderActionPause', true);
+			lm.LoaderActionEnter = function(){
+				console.log('Line172');
+			}*/
 			
-			lm.LoaderActions = function(evt){
-				lm.evt = evt;
+			lm.LoaderActionEnter = function(){
+				console.log('Line172');
 			}
 			
-			document.addEventListener('polymer-ready', function() {
-			    //document.querySelector('#pano').stop();
+			lm.LoaderActionRW = function(){
+				console.log('Line175');
+				lm.scroll.forward = false;
+				lm.scroll.currentX = lm.scroll.elm.scrollLeft;
+				lm.scroll.raf = requestAnimationFrame(lm.scroll.X );
+				lm.btn.RW.className = 'disabled';
+				lm.btn.pause.className = 'enabled';
+				lm.btn.FF.className = 'disabled';
+				lm.scroll.elm.setAttribute("touch-action", "none");
+			}
+			lm.LoaderActionPause = function(){
+				console.log('Line178');
+				lm.scroll.Stop();
+			}
+			lm.LoaderActionFF = function(){
+				console.log('Line181');
+				lm.scroll.forward = true;
+				lm.scroll.currentX = lm.scroll.elm.scrollLeft;
+				lm.scroll.raf = requestAnimationFrame(lm.scroll.X );
+				lm.btn.RW.className = 'disabled';
+				lm.btn.pause.className = 'enabled';
+				lm.btn.FF.className = 'disabled';
+				lm.scroll.elm.setAttribute("touch-action", "none");
+			}
+			
+			
+			document.addEventListener('polymer-ready', function() {			    
 				
 				if(lm.IsMobile()){
 					console.log("Window Ready for Mobile");
 					
 				}else{
-					//lm.scroll.elm.setAttribute("type","button");("onmousedown",lm.scroll.Stop, false );
+					
 					console.log("Window Ready for Desktop");
 				}
 				
@@ -182,6 +236,12 @@
 					Polymer.import(['../bower_components/core-icons/core-icons.html','../bower_components/paper-button/paper-button.html', '../bower_components/core-icons/av-icons.html'], 
 					function() {
 		          		document.getElementById("controlBtns").className = '';
+						  document.getElementById("loading").className = 'hide';
+						  lm.btn = {};
+						  lm.btn.enter = document.getElementById('btnEnter');
+						  lm.btn.RW = document.getElementById('btnRW');
+						  lm.btn.pause= document.getElementById('btnPause');
+						  lm.btn.FF = document.getElementById('btnFF');
 		        	});
 				}, 500);
 				
@@ -223,15 +283,16 @@
 						
 						var script1 = document.createElement('script');
 						script1.type = "text/javascript";
-						script1.src = '//cdnjs.cloudflare.com/ajax/libs/platform/1.2.0/platform.js';
+						script1.src = '../bower_components/platform/platform.js';
 						script1.onload = function(){
 							console.log("Script 1 Ready");
 							setTimeout(function(){
-					            var link2 = document.createElement('link');
-								link2.rel = "import";
+					            var link2 = document.createElement('link');								
 								link2.href = '../bower_components/polymer/polymer.html';
+								link2.rel = "import";
 								document.getElementsByTagName("head")[0].appendChild(link2);
-							}, 1000);
+								console.log("Link 2 Ready");
+							}, 200);
 				        };
 						document.getElementsByTagName("head")[0].appendChild(script1);
 						
