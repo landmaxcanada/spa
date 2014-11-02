@@ -43,8 +43,8 @@
 			div#controlBtns{min-height:56px}
 			div#loaderControls{
 				position: absolute;
-				width: 27%;
-				min-width: 370px;
+				width: 25%;
+				min-width: 316px;
 				border: 1px solid black;
 				border-radius: 8px;
 				box-shadow: 4px 4px 10px #000;
@@ -106,6 +106,7 @@
 				padding: 4px;
 				marging: 4px;
 				box-sizing: content-box;
+				vertical-align:top;
 			}
 		</style>
 	</head>
@@ -255,7 +256,7 @@
 						  Polymer.addEventListener(lm.btn.FF, 'tap', lm.LoaderActionFF);
 						  
 						  Polymer.job('', function(){
-							  Polymer.import(['elements.html'], function(){
+							  Polymer.import(['main.html'], function(){
 								  lm.btn.enter.className = '';
 								  document.getElementById("loaderMessage").className = 'hide';
 							  });
