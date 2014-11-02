@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<title>Wasa Lakeside B&amp;B or Cabin</title>
+		<link rel="stylesheet" href="css/styles.css" shim-shadowdom>
 		<style>
 			html, body{
 			  margin:0;
@@ -15,6 +16,9 @@
 			h2,h3, p{
 				margin:0;
 			  	padding:0;
+			}
+			small {
+				font-size:13px;
 			}
 			.full{
 			  position: absolute;
@@ -40,7 +44,7 @@
 			div#loaderControls{
 				position: absolute;
 				width: 27%;
-				min-width: 322px;
+				min-width: 370px;
 				border: 1px solid black;
 				border-radius: 8px;
 				box-shadow: 4px 4px 10px #000;
@@ -61,7 +65,7 @@
 			::-webkit-scrollbar-thumb {  
 			    background-color: blue;
 			}
-			html div#loaderControls h2{
+			html div#loaderControls h3{
 				color:blue;
 				text-align: center;
 			}
@@ -72,13 +76,13 @@
 				margin: 4px;
 				min-height: 44px;
 				min-width: 44px;
-				font-size: 32px;
+				font-size: 30px;
 				background-color: rgba(255,255,255,0.2);
 				vertical-align: middle;
 			}
 			html div#loaderControls paper-button svg{
-				width: 44px;
-				height: 44px;
+				width: 40px;
+				height: 40px;
 			}
 			
 			html div#loaderControls paper-button#btnEnter{
@@ -95,11 +99,12 @@
 				cursor: pointer;
 			}
 			
-			html paper-button /deep/ core-icon{
-				height: 32px;
-    			width: 32px;
-				padding: 6px;
-				marging: 6px;
+			html div#loaderControls paper-button /deep/ core-icon{
+				height: 28px;
+    			width: 28px;
+				padding: 4px;
+				marging: 4px;
+				box-sizing: content-box;
 			}
 		</style>
 	</head>
@@ -108,12 +113,12 @@
 			<img id="loaderImg" src="http://www.wasalakeresort.com/images/2003_South_PanoramMerged1600x250.jpg" />
 		</div>
 		<div id="loaderControls">
-			<h2>Wasa Lakeside B&amp;B</h2>
+			<h3>Wasa Lakeside B&amp;B</h3>
 			<div>
 				<small id="loaderMessage">Loading...</small>
 			</div>
 			<div id="controlBtns" class="hidden">
-				<paper-button id="btnEnter" class="enabled" raised roll="button" onclick="lm.LoaderActionEnter()">Enter</paper-button>
+				<paper-button id="btnEnter" class="hidden" raised roll="button" onclick="lm.LoaderActionEnter()">Enter</paper-button>
 				<paper-button id="btnRW" class="disabled" raised roll="button">
 					<core-icon icon="av:fast-rewind" onclick="lm.LoaderActionRW()"></core-icon>
 				</paper-button>
@@ -189,17 +194,17 @@
 			//PolymerGestures.addEventListener(element, eventname, handler, capture);
 /*			PolymerGestures.addEventListener('lm.btn.pause', 'tap', 'lm.LoaderActionPause', true);
 			lm.LoaderActionEnter = function(){
-				console.log('Line172');
+				//console.log('Line172');
 			}*/
 			
 			lm.LoaderActionEnter = function(){
-				console.log('Line172');
+				//console.log('Line172');
 				lm.scroll.Stop();
 				alert('This button will open the main site when it is done.');
 			}
 			
 			lm.LoaderActionRW = function(){
-				console.log('Line175');
+				//console.log('Line175');
 				lm.scroll.forward = false;
 				lm.scroll.currentX = lm.scroll.elm.scrollLeft;
 				lm.scroll.raf = requestAnimationFrame(lm.scroll.X );
@@ -209,11 +214,11 @@
 				lm.scroll.elm.setAttribute("touch-action", "none");
 			}
 			lm.LoaderActionPause = function(){
-				console.log('Line178');
+				//console.log('Line178');
 				lm.scroll.Stop();
 			}
 			lm.LoaderActionFF = function(){
-				console.log('Line181');
+				//console.log('Line181');
 				lm.scroll.forward = true;
 				lm.scroll.currentX = lm.scroll.elm.scrollLeft;
 				lm.scroll.raf = requestAnimationFrame(lm.scroll.X );
@@ -227,15 +232,18 @@
 			document.addEventListener('polymer-ready', function() {			    
 				
 				if(lm.IsMobile()){
-					console.log("Window Ready for Mobile");
+					//console.log("Window Ready for Mobile");
 					
 				}else{
 					
-					console.log("Window Ready for Desktop");
+					//console.log("Window Ready for Desktop");
 				}
 				
 				setTimeout(function(){
-					Polymer.import(['../bower_components/core-icons/core-icons.html','../bower_components/paper-button/paper-button.html', '../bower_components/core-icons/av-icons.html'], 
+					Polymer.import(['../bower_components/core-icons/core-icons.html',
+					'../bower_components/paper-button/paper-button.html',
+					'../bower_components/core-icons/av-icons.html',
+					'../bower_components/font-roboto/roboto.html'], 
 					function() {
 		          		document.getElementById("controlBtns").className = '';
 						  document.getElementById("loading").className = 'hide';
@@ -244,10 +252,16 @@
 						  lm.btn.RW = document.getElementById('btnRW');
 						  lm.btn.pause= document.getElementById('btnPause');
 						  lm.btn.FF = document.getElementById('btnFF');
+						  
+						  /*setTimeout(function(){
+								Polymer.import(['main.html'], 
+								function() {
+									document.getElementById("btnEnter").className = 'enabled';
+								});
+							}, 1000);*/
 		        	});
 				}, 500);
-				
-				
+
 		  	});
 			  
 			lm.IsMobile = function() {
@@ -287,13 +301,13 @@
 						script1.type = "text/javascript";
 						script1.src = '../bower_components/platform/platform.js';
 						script1.onload = function(){
-							console.log("Script 1 Ready");
+							//console.log("Script 1 Ready");
 							setTimeout(function(){
 					            var link2 = document.createElement('link');								
 								link2.href = '../bower_components/polymer/polymer.html';
 								link2.rel = "import";
 								document.getElementsByTagName("head")[0].appendChild(link2);
-								console.log("Link 2 Ready");
+								//console.log("Link 2 Ready");
 							}, 200);
 				        };
 						document.getElementsByTagName("head")[0].appendChild(script1);

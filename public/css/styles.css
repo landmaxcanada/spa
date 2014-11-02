@@ -62,8 +62,8 @@ body /deep/ core-toolbar {
 }
 
 html /deep/ core-icon{
-  width: 36px !important;
-  height: 36px !important;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
 }
 
