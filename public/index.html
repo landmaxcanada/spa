@@ -135,6 +135,7 @@
 			</div>
 			<div id="loading">Loading...</div>
 		</div>
+		<lm-body class="full hide"></lm-body>
 		<script>
 			var lm = {};
 			lm.scroll = {};
@@ -197,7 +198,11 @@
 			lm.LoaderActionEnter = function(){
 				//console.log('Line172');
 				lm.scroll.Stop();
-				alert('This button will open the main site when it is done.');
+				//document.getElementsByTagName('lm-body')[0]
+				$('lm-body').show();
+				//alert('This button will open the main site when it is done.');
+				
+				
 			}
 			
 			lm.LoaderActionRW = function(){
@@ -250,15 +255,17 @@
 						  lm.btn.pause= document.getElementById('btnPause');
 						  lm.btn.FF = document.getElementById('btnFF');
 						  
-						  Polymer.addEventListener(lm.btn.enter, 'tap', lm.LoaderActionEnter);
+						  
 						  Polymer.addEventListener(lm.btn.RW, 'tap', lm.LoaderActionRW);
 						  Polymer.addEventListener(lm.btn.pause, 'tap', lm.LoaderActionPause);
 						  Polymer.addEventListener(lm.btn.FF, 'tap', lm.LoaderActionFF);
 						  
 						  Polymer.job('', function(){
-							  Polymer.import(['main.html'], function(){
+							  //Polymer.import(['main.html'], function(){
+							  Polymer.import(['../elements/main.html'], function(){
 								  lm.btn.enter.className = '';
 								  document.getElementById("loaderMessage").className = 'hide';
+								  Polymer.addEventListener(lm.btn.enter, 'tap', lm.LoaderActionEnter);
 							  });
 						  },1000);
 						  
